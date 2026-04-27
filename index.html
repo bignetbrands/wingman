@@ -354,6 +354,25 @@
       color: rgba(245, 242, 234, 0.4);
     }
 
+    /* ---------- Socials ---------- */
+    .socials {
+      position: fixed;
+      right: 28px;
+      bottom: 26px;
+      z-index: 10;
+      display: flex;
+      gap: 18px;
+    }
+    .socials a {
+      color: var(--bone);
+      opacity: 0.9;
+      display: inline-flex;
+      transition: opacity .2s ease, transform .2s ease;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+    .socials a:hover { opacity: 1; transform: translateY(-2px); }
+    .socials svg { width: 20px; height: 20px; }
+
     /* ---------- Animations ---------- */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -369,6 +388,8 @@
       .release { font-size: 13px; margin-top: 12px; letter-spacing: 0.25em; }
       .cta-row { margin-top: 20px; gap: 10px; }
       .btn { padding: 12px 22px; font-size: 12px; }
+      .socials { right: 16px; bottom: 14px; gap: 14px; }
+      .socials svg { width: 18px; height: 18px; }
     }
   </style>
 </head>
@@ -415,7 +436,7 @@
     </div>
 
     <div class="cta-row">
-      <a class="btn btn-outline" href="https://www.youtube.com" target="_blank" rel="noopener">
+      <a class="btn btn-outline" href="https://tv.apple.com/us/clip/wingman/umc.cmc.5pnojsl6gb8s2unsrl2arn3s7?targetId=umc.cmc.nfzru25awp5jnendhudhjw9t&targetType=Movie" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 8l6 4-6 4V8z"/></svg>
         Watch Trailer
       </a>
@@ -425,6 +446,22 @@
       </button>
     </div>
   </main>
+
+  <!-- Social icons -->
+  <div class="socials">
+    <a href="https://www.instagram.com/wingmanofficialmovie/?hl=en" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="https://www.tiktok.com/@wingmanofficialmovie?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.6 7.2a5.4 5.4 0 0 1-3.4-1.2 5.4 5.4 0 0 1-2-3.5h-3v12.3a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .7.1V9.2a5.6 5.6 0 1 0 4.9 5.5V9.6a8.4 8.4 0 0 0 5.4 1.9V8.4c-.1 0-.1 0 0-1.2z"/>
+      </svg>
+    </a>
+  </div>
 
   <!-- Email signup modal -->
   <div class="modal-backdrop" id="modal" onclick="handleBackdropClick(event)" aria-hidden="true">
@@ -482,8 +519,8 @@
         prior.push({ email, ts: new Date().toISOString() });
         localStorage.setItem('wingman_signups', JSON.stringify(prior));
       } catch (_) {}
-      // Redirect to filmhub
-      window.location.href = 'https://filmhub.com';
+      // Redirect to the Wingman movie on Apple TV
+      window.location.href = 'https://tv.apple.com/us/movie/wingman/umc.cmc.nfzru25awp5jnendhudhjw9t';
     }
 
     function shareSite() {
