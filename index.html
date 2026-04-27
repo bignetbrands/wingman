@@ -122,25 +122,27 @@
     }
     .hero > * { pointer-events: auto; }
 
-    .eyebrow {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      letter-spacing: 0.55em;
-      text-transform: uppercase;
-      color: rgba(245, 242, 234, 0.85);
-      margin-bottom: 18px;
+    .cast {
       display: flex;
-      align-items: center;
-      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      column-gap: 32px;
+      row-gap: 6px;
+      margin-bottom: 18px;
       animation: fadeUp 1s ease 0.2s both;
     }
-    .eyebrow span { display: inline-block; }
-    .eyebrow .bar {
-      width: 36px;
-      height: 1px;
-      background: rgba(245, 242, 234, 0.6);
+    .cast-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bone);
+      white-space: nowrap;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
+    .cast-name .first { font-weight: 400; opacity: 0.85; }
+    .cast-name .last  { font-weight: 700; }
 
     .logo-wrap {
       width: min(640px, 86vw);
@@ -383,8 +385,8 @@
     @media (max-width: 640px) {
       .topbar { padding: 16px 18px; }
       .hero { padding: 18px 18px 22px; }
-      .eyebrow { font-size: 11px; letter-spacing: 0.4em; margin-bottom: 14px; }
-      .eyebrow .bar { width: 20px; }
+      .cast { column-gap: 16px; margin-bottom: 12px; }
+      .cast-name { font-size: 11px; letter-spacing: 0.14em; }
       .release { font-size: 13px; margin-top: 12px; letter-spacing: 0.25em; }
       .cta-row { margin-top: 20px; gap: 10px; }
       .btn { padding: 12px 22px; font-size: 12px; }
@@ -419,10 +421,12 @@
 
   <!-- Hero -->
   <main class="hero">
-    <div class="eyebrow">
-      <span class="bar"></span>
-      <span>Fly with the best</span>
-      <span class="bar"></span>
+    <div class="cast">
+      <span class="cast-name"><span class="first">Harland</span> <span class="last">Williams</span></span>
+      <span class="cast-name"><span class="first">Russell</span> <span class="last">Peters</span></span>
+      <span class="cast-name"><span class="first">Jamie</span> <span class="last">Kennedy</span></span>
+      <span class="cast-name"><span class="first">Kayla</span> <span class="last">Wallace</span></span>
+      <span class="cast-name"><span class="first">Evan</span> <span class="last">Marsh</span></span>
     </div>
 
     <div class="logo-wrap">
@@ -545,7 +549,7 @@
       if (navigator.share) {
         navigator.share({
           title: 'Wingman',
-          text: 'Fly with the best — Wingman.',
+          text: 'Wingman — starring Harland Williams, Russell Peters, Jamie Kennedy, Kayla Wallace & Evan Marsh.',
           url: window.location.href
         }).catch(() => {});
       } else {
