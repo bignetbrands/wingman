@@ -473,13 +473,24 @@
       </button>
       <h2 id="modal-title">Before You Take Off</h2>
       <p>Drop your email and we'll update you with more Wingman goodies.</p>
-      <form class="modal-form" onsubmit="handleSubmit(event)">
-        <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
-        <button class="btn btn-solid" type="submit">
+      <form
+        class="modal-form"
+        id="mc-form"
+        action="https://wingmanmovie.us8.list-manage.com/subscribe/post?u=8ef4b5082ddcb3aa31ce86d54&amp;id=f5f491b4b7&amp;f_id=00fe15e1f0"
+        method="post"
+        target="mc-target"
+        onsubmit="handleSubmit(event)">
+        <input type="email" name="EMAIL" placeholder="your@email.com" required autocomplete="email" />
+        <!-- Mailchimp honeypot -->
+        <div style="position:absolute; left:-5000px;" aria-hidden="true">
+          <input type="text" name="b_8ef4b5082ddcb3aa31ce86d54_f5f491b4b7" tabindex="-1" value="" />
+        </div>
+        <button class="btn btn-solid" type="submit" id="mc-submit">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          Watch the Movie
+          <span id="mc-submit-label">Watch the Movie</span>
         </button>
       </form>
+      <iframe name="mc-target" id="mc-target" style="display:none;" title="Mailchimp submission"></iframe>
       <div class="modal-note">No spam &mdash; just the good stuff</div>
     </div>
   </div>
@@ -510,17 +521,24 @@
     });
 
     function handleSubmit(e) {
-      e.preventDefault();
-      const email = e.target.email.value.trim();
-      if (!email) return;
-      // Save locally so you can wire it up to a real backend later if you want
-      try {
-        const prior = JSON.parse(localStorage.getItem('wingman_signups') || '[]');
-        prior.push({ email, ts: new Date().toISOString() });
-        localStorage.setItem('wingman_signups', JSON.stringify(prior));
-      } catch (_) {}
-      // Redirect to the Wingman movie on Apple TV
-      window.location.href = 'https://tv.apple.com/us/movie/wingman/umc.cmc.nfzru25awp5jnendhudhjw9t';
+      // Don't preventDefault — we want the form to actually POST to Mailchimp
+      // via the hidden iframe (target="mc-target"). Just update UI and redirect.
+      const email = e.target.EMAIL.value.trim();
+      if (!email) {
+        e.preventDefault();
+        return;
+      }
+
+      const submitBtn = document.getElementById('mc-submit');
+      const label = document.getElementById('mc-submit-label');
+      if (label) label.textContent = "You're in! Taking off...";
+      if (submitBtn) submitBtn.disabled = true;
+
+      // Give Mailchimp ~1.4s to receive the POST in the hidden iframe,
+      // then redirect to the Apple TV movie page.
+      setTimeout(function () {
+        window.location.href = 'https://tv.apple.com/us/movie/wingman/umc.cmc.nfzru25awp5jnendhudhjw9t';
+      }, 1400);
     }
 
     function shareSite() {
