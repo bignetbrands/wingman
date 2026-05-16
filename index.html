@@ -259,6 +259,77 @@
     }
     .modal-backdrop.open .modal { transform: scale(1) translateY(0); }
 
+    .modal.modal-wide { max-width: 560px; }
+
+    /* ---------- Screenings list ---------- */
+    .screenings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .screening {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: rgba(245, 242, 234, 0.04);
+      border: 1px solid rgba(245, 242, 234, 0.14);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--bone);
+      text-align: left;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+    .screening:hover {
+      background: rgba(245, 242, 234, 0.09);
+      border-color: rgba(245, 242, 234, 0.3);
+      transform: translateY(-1px);
+    }
+    .screening-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .screening-region {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 234, 0.55);
+    }
+    .screening-venue {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bone);
+      line-height: 1.1;
+    }
+    .screening-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      color: rgba(245, 242, 234, 0.65);
+      margin-top: 2px;
+    }
+    .screening-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      padding: 8px 14px;
+      background: var(--bone);
+      color: var(--ink);
+      border-radius: 999px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: transform .2s ease;
+    }
+    .screening-cta svg { width: 13px; height: 13px; }
+    .screening:hover .screening-cta { transform: translateX(2px); }
+
     .modal::before {
       content: "";
       position: absolute;
@@ -392,6 +463,11 @@
       .btn { padding: 12px 22px; font-size: 12px; }
       .socials { right: 16px; bottom: 14px; gap: 14px; }
       .socials svg { width: 18px; height: 18px; }
+      .screening { padding: 14px; gap: 10px; }
+      .screening-venue { font-size: 16px; }
+      .screening-region { font-size: 9px; letter-spacing: 0.25em; }
+      .screening-label { font-size: 12px; }
+      .screening-cta { padding: 7px 11px; font-size: 11px; letter-spacing: 0.12em; }
     }
   </style>
 </head>
@@ -448,6 +524,13 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         Watch the Movie
       </button>
+      <button class="btn btn-outline" type="button" onclick="openScreeningsModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V9z"/>
+          <path d="M13 5v2M13 11v2M13 17v2"/>
+        </svg>
+        Screenings
+      </button>
     </div>
   </main>
 
@@ -499,6 +582,55 @@
     </div>
   </div>
 
+  <!-- Screenings modal -->
+  <div class="modal-backdrop" id="screenings-modal" onclick="handleScreeningsBackdropClick(event)" aria-hidden="true">
+    <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="screenings-title">
+      <button class="modal-close" type="button" onclick="closeScreeningsModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <h2 id="screenings-title">Catch It On The Big Screen</h2>
+      <p>Limited theatrical premieres &mdash; grab your tickets below.</p>
+      <div class="screenings-list">
+        <a class="screening" href="https://www.eventbrite.com.au/e/wingman-exclusive-uk-premiere-genesis-cinema-london-tickets-1989272509626?aff=oddtdtcreator&keep_tld=true" target="_blank" rel="noopener">
+          <div class="screening-info">
+            <div class="screening-region">UK &nbsp;&middot;&nbsp; London</div>
+            <div class="screening-venue">Genesis Cinema</div>
+            <div class="screening-label">Exclusive UK Premiere</div>
+          </div>
+          <div class="screening-cta">
+            Tickets
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+        <a class="screening" href="https://www.lidocinemas.com.au/movies/wingman" target="_blank" rel="noopener">
+          <div class="screening-info">
+            <div class="screening-region">Australia &nbsp;&middot;&nbsp; Melbourne</div>
+            <div class="screening-venue">Lido Cinemas</div>
+            <div class="screening-label">Melbourne Premiere</div>
+          </div>
+          <div class="screening-cta">
+            Tickets
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+        <a class="screening" href="https://www.ritzcinemas.com.au/movies/wingman" target="_blank" rel="noopener">
+          <div class="screening-info">
+            <div class="screening-region">Australia &nbsp;&middot;&nbsp; Sydney</div>
+            <div class="screening-venue">Ritz Cinemas</div>
+            <div class="screening-label">Sydney Premiere</div>
+          </div>
+          <div class="screening-cta">
+            Tickets
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+      </div>
+      <div class="modal-note">More dates announced soon</div>
+    </div>
+  </div>
+
   <script>
     function openModal() {
       const m = document.getElementById('modal');
@@ -520,9 +652,44 @@
       if (e.target.id === 'modal') closeModal();
     }
 
+    function openScreeningsModal() {
+      const m = document.getElementById('screenings-modal');
+      m.classList.add('open');
+      m.setAttribute('aria-hidden', 'false');
+      // Reflect in URL so it's shareable / refresh-stable
+      if (window.location.hash !== '#screenings') {
+        history.replaceState(null, '', '#screenings');
+      }
+    }
+
+    function closeScreeningsModal() {
+      const m = document.getElementById('screenings-modal');
+      m.classList.remove('open');
+      m.setAttribute('aria-hidden', 'true');
+      if (window.location.hash === '#screenings') {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    }
+
+    function handleScreeningsBackdropClick(e) {
+      if (e.target.id === 'screenings-modal') closeScreeningsModal();
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal();
+        closeScreeningsModal();
+      }
     });
+
+    // Auto-open screenings modal when URL contains #screenings
+    function checkHash() {
+      if (window.location.hash === '#screenings') {
+        openScreeningsModal();
+      }
+    }
+    window.addEventListener('hashchange', checkHash);
+    document.addEventListener('DOMContentLoaded', checkHash);
 
     function handleSubmit(e) {
       // Don't preventDefault — we want the form to actually POST to Mailchimp
